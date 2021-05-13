@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
     baseURL: "https://api.themoviedb.org/3/",
-    params:{
+    params: {
         api_key: "23f0e07dac4e85bff7bf70845ddf34e7",
         language: "en-US"
     }
@@ -31,8 +31,8 @@ export const tvApi = {
     popular: () => api.get("tv/popular"),
     airingToday: () => api.get("tv/airing_today"),
     tvDetail: id => api.get(`tv/${id}`, {
-        params:{
-            append_to_response:"vidieos"
+        params: {
+            append_to_response: "vidieos"
         }
 
     }),
@@ -42,4 +42,4 @@ export const tvApi = {
             query: `${term}`
         }
     })
-  };
+};
