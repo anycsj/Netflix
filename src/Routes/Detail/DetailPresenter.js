@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Helmet from "react-helmet";
 import Loader from "Components/Loader";
-
+import { Link, Route, withRouter } from "react-router-dom";
+import Overview from "Components/Overview";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -62,14 +63,27 @@ const Divider = styled.span`
   margin: 0 10px;
 `;
 
-const Overview = styled.p`
-  font-size: 12px;
-  opacity: 0.7;
-  line-height: 1.5;
-  width: 50%;
+const InsideMenu = styled.div`
+  margin: 20px 0px;
 `;
 
-const DetailPresenter = ({ result, loading, error }) =>   
+const List = styled.ul`
+  display: flex;
+`;
+
+const ListItem = styled.li`
+  margin-right: 20px;
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 2px solid #1abc9c;
+  padding: 5px;
+  border-radius: 3px;
+  background-color: ${props => (props.active ? "#1abc9c" : "transparent")};
+  color: white;
+`;
+
+
+const DetailPresenter = withRouter(({ location: { pathname }, result, loading, isMovie, error }) =>   
   loading ? (
     <>
       <Helmet>
@@ -122,15 +136,43 @@ const DetailPresenter = ({ result, loading, error }) =>
                 )}
             </Item>
             <Divider>•</Divider>
+            {
+              console.log(pathname)
+            }
             <Item>
-              <button onClick={()=>window.open("www.naver.com","_blank")}>IMDB</button>
+              <button>
+                <Link to={{ pathname : `https://www.imdb.com/title/${result.imdb_id}`}} target="_blank">IMDB</Link>
+              </button>
             </Item>
+
           </ItemContainer>
-          <Overview>{result.overview}</Overview>
+
+          <InsideMenu>
+          <List>
+              <ListItem active={isMovie ? pathname === `/movie/${result.id}/overview`:
+                            pathname === `/show/${result.id}/overview`}>
+              <Link to={isMovie ? `/movie/${result.id}/overview`:
+                        `/show/${result.id}/overview`}>Overview</Link>
+              </ListItem>
+              
+              <ListItem active={isMovie ? pathname === `/movie/${result.id}/video`:
+                            pathname === `/show/${result.id}/video`}>
+              <Link to={isMovie ? `/movie/${result.id}/video`:
+                        `/show/${result.id}/video`}>Video</Link>
+              </ListItem>
+          </List>
+          </InsideMenu>
+          <Route path={isMovie ? ["/movie/:id", "/movie/:id/overview"] : "/show/:id/overview"}>
+            <Overview data = {result}/>
+          </Route>
+
+          <Route path={isMovie ? "/movie/:id/video" : "/show/:id/video"} component={Overview}/>
+        
+          
         </Data>
       </Content>
     </Container>
-  );
+  ));
 
 DetailPresenter.propTypes = {
 result: PropTypes.object,
