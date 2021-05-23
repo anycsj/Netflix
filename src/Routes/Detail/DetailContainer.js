@@ -26,12 +26,12 @@ export default class extends React.Component {
         if(isNaN(parseId)) return push("/");
 
         let result;
-
         try{
             if(isMovie){
                 ({data:result} = await moviesApi.movieDtail(parseId));
+                
             } else {
-                ({data:result} = await tvApi.tvDetail(parseId));
+                ({data:result} = await tvApi.showDetail(parseId));
             }
 
         } catch {

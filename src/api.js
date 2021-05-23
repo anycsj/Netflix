@@ -12,34 +12,35 @@ export const moviesApi = {
     nowPlaying: () => api.get("movie/now_playing"),
     upcoming: () => api.get("movie/upcoming"),
     popular: () => api.get("movie/popular"),
-    movieDtail: id => api.get(`moive/${id}`, {
+    movieDetail: id =>
+        api.get(`movie/${id}`, {
         params: {
             append_to_response: "videos"
         }
     }),
-
-    search: term => api.get("search/movie", {
+    search: term =>
+      api.get("search/movie", {
         params: {
-            query: `${term}`
+          query: term
         }
-    })
-};
-
-
-export const tvApi = {
+      })
+  };
+  
+  export const tvApi = {
     topRated: () => api.get("tv/top_rated"),
     popular: () => api.get("tv/popular"),
     airingToday: () => api.get("tv/airing_today"),
-    tvDetail: id => api.get(`tv/${id}`, {
+    showDetail: id =>
+      api.get(`tv/${id}`, {
         params: {
-            append_to_response: "vidieos"
+          append_to_response: "videos"
         }
-
-    }),
-
-    search: term => api.get("search/tv", {
+      }),
+    search: term =>
+      api.get("search/tv", {
         params: {
-            query: `${term}`
+          query: term
         }
-    })
-};
+      })
+  };
+  
