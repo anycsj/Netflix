@@ -121,6 +121,10 @@ const DetailPresenter = ({ result, loading, error }) =>
                     : `${genre.name} / `
                 )}
             </Item>
+            <Divider>•</Divider>
+            <Item>
+              <button onClick={()=>window.open("www.naver.com","_blank")}>IMDB</button>
+            </Item>
           </ItemContainer>
           <Overview>{result.overview}</Overview>
         </Data>
