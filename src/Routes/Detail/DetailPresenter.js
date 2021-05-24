@@ -5,6 +5,7 @@ import Helmet from "react-helmet";
 import Loader from "Components/Loader";
 import { Link, Route, withRouter } from "react-router-dom";
 import Overview from "Components/Overview";
+import Video from "Components/Video";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -137,7 +138,7 @@ const DetailPresenter = withRouter(({ location: { pathname }, result, loading, i
             </Item>
             <Divider>•</Divider>
             {
-              console.log(pathname)
+              console.log(result)
             }
             <Item>
               <button>
@@ -162,11 +163,13 @@ const DetailPresenter = withRouter(({ location: { pathname }, result, loading, i
               </ListItem>
           </List>
           </InsideMenu>
-          <Route path={isMovie ? ["/movie/:id", "/movie/:id/overview"] : "/show/:id/overview"}>
+          <Route path={isMovie ? "/movie/:id/overview" : "/show/:id/overview"}>
             <Overview data = {result}/>
           </Route>
 
-          <Route path={isMovie ? "/movie/:id/video" : "/show/:id/video"} component={Overview}/>
+          <Route path={isMovie ? "/movie/:id/video" : "/show/:id/video"}>
+            <Video data = {result}/>
+          </Route>
         
           
         </Data>
