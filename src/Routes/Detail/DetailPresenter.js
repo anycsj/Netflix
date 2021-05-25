@@ -6,6 +6,7 @@ import Loader from "Components/Loader";
 import { Link, Route, withRouter } from "react-router-dom";
 import Overview from "Components/Overview";
 import Video from "Components/Video";
+import Seasons from "Components/Seasons";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -76,10 +77,10 @@ const ListItem = styled.li`
   margin-right: 20px;
   text-transform: uppercase;
   font-weight: 600;
-  border: 2px solid #1abc9c;
+  border: 2px solid #ffc93c;
   padding: 5px;
   border-radius: 3px;
-  background-color: ${props => (props.active ? "#1abc9c" : "transparent")};
+  background-color: ${props => (props.active ? "#ffc93c" : "transparent")};
   color: white;
 `;
 
@@ -137,9 +138,6 @@ const DetailPresenter = withRouter(({ location: { pathname }, result, loading, i
                 )}
             </Item>
             <Divider>•</Divider>
-            {
-              console.log(result)
-            }
             <Item>
               <button>
                 <Link to={{ pathname : `https://www.imdb.com/title/${result.imdb_id}`}} target="_blank">IMDB</Link>
@@ -161,6 +159,14 @@ const DetailPresenter = withRouter(({ location: { pathname }, result, loading, i
               <Link to={isMovie ? `/movie/${result.id}/video`:
                         `/show/${result.id}/video`}>Video</Link>
               </ListItem>
+
+              {
+                !isMovie && result.seasons.length > 0 &&
+                <ListItem active={pathname === `/show/${result.id}/seasons`}>
+                <Link to={`/show/${result.id}/seasons`}>Seasons</Link>
+                </ListItem>
+              }
+
           </List>
           </InsideMenu>
           <Route path={isMovie ? "/movie/:id/overview" : "/show/:id/overview"}>
@@ -170,8 +176,14 @@ const DetailPresenter = withRouter(({ location: { pathname }, result, loading, i
           <Route path={isMovie ? "/movie/:id/video" : "/show/:id/video"}>
             <Video data = {result}/>
           </Route>
-        
-          
+
+          {
+            !isMovie && result.seasons.length > 0 &&
+                        <Route path="/show/:id/seasons">
+                          <Seasons data = {result}/>
+                        </Route>
+          }
+         
         </Data>
       </Content>
     </Container>
