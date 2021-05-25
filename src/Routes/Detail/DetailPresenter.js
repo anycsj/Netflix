@@ -89,7 +89,7 @@ const DetailPresenter = withRouter(({ location: { pathname }, result, loading, i
   loading ? (
     <>
       <Helmet>
-        <title>Loading | Nomflix</title>
+        <title>Loading | SJ_flix</title>
       </Helmet>
       <Loader />
     </>
@@ -98,7 +98,7 @@ const DetailPresenter = withRouter(({ location: { pathname }, result, loading, i
       <Helmet>
         <title>
           {result.original_title ? result.original_title : result.original_name}{" "}
-          | Nomflix
+          | SJ_flix
         </title>
       </Helmet>
       <Backdrop
